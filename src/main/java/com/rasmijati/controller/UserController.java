@@ -22,6 +22,7 @@ public class UserController {
         userRepository = new UserRepository();
         create();
         findAll();
+        delete();
     }
 
 //static is used as only static variable and method can be used in other static method i.e main method    
@@ -33,7 +34,7 @@ public class UserController {
         String email = null;
         String password = null;
         UserType role = null;
-        
+
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter id : ");
         id = sc.nextLong();
@@ -43,7 +44,7 @@ public class UserController {
 
         System.out.println("Enter address : ");
         address = sc.next();
-        
+
         System.out.println("Enter phone number : ");
         phone = sc.next();
 
@@ -63,8 +64,15 @@ public class UserController {
 
     public static void findAll() {
         System.out.println("User List : ");
-        userRepository.findAll()
-                .stream()
+        userRepository.findAll().stream()
                 .forEach(x -> System.out.println(x));
+    }
+
+    public static void delete() {
+        System.out.println("Enter Id for delete operation : ");
+        Scanner sc = new Scanner(System.in);
+        Long id = sc.nextLong();
+        User user = new UserRepository().findById(id);
+        userRepository.delete(user);
     }
 }
