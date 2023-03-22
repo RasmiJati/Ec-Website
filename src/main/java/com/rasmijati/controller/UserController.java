@@ -8,6 +8,10 @@ package com.rasmijati.controller;
 import com.rasmijati.model.User;
 import com.rasmijati.model.UserType;
 import com.rasmijati.repository.UserRepository;
+import static com.rasmijati.util.Validator.isValidEmail;
+import static com.rasmijati.util.Validator.isValidPassword;
+import static com.rasmijati.util.Validator.isValidPhoneNumber;
+import static com.rasmijati.util.Validator.isValidString;
 import java.util.Scanner;
 
 /**
@@ -23,7 +27,10 @@ public class UserController {
         create();
         findAll();
         edit();
-//        delete();
+        findAll();
+        delete();
+        findAll();
+
     }
 
 //static is used as only static variable and method can be used in other static method i.e main method    
@@ -34,37 +41,71 @@ public class UserController {
         String phone = null;
         String email = null;
         String password = null;
-        UserType role = null;
+        UserType utype = null;
 
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter id : ");
-        id = sc.nextLong();
+        while (id == null) {
+            System.out.println("Enter id : ");
+            id = sc.nextLong();
+        }
+        while (name == null || name.isEmpty()) {
+            System.out.println("Enter name : ");
+            name = sc.next();
+            if (!isValidString(name)) {
+                System.err.println("Invalid name!!!");
+                name = null;
+            }
+        }
+        while (address == null || address.isEmpty()) {
+            System.out.println("Enter address : ");
+            address = sc.next();
+            if (!isValidString(address)) {
+                System.err.println("Invalid Address!!!");
+                address = null;
+            }
+        }
+        while (phone == null || phone.isEmpty()) {
+            System.out.println("Enter phone number : ");
+            phone = sc.next();
+            if (!isValidPhoneNumber(phone)) {
+                System.err.println("Invalid phone!!!");
+                phone = null;
+            }
+        }
+        while (email == null || email.isEmpty()) {
+            System.out.println("Enter email : ");
+            email = sc.next();
+            if (!isValidEmail(email)) {
+                System.err.println("Invalid Email!!!");
+                email = null;
+            }
+        }
 
-        System.out.println("Enter name : ");
-        name = sc.next();
+        while (password == null || password.isEmpty()) {
+            System.out.println("Enter password : ");
+            password = sc.next();
+            if (!isValidPassword(password)) {
+                System.err.println("Invalid Password!!!");
+                password = null;
+            }
+        }
+        while (utype == null) {
+            System.out.println("Enter user type (ADMIN / USER) : ");
+            String entered_role = sc.next().toUpperCase();
+            utype = UserType.valueOf(entered_role);
+            if (!isValidString(entered_role)) {
+                System.err.println("Invalid Role!!!");
+                utype = null;
+            }
+        }
 
-        System.out.println("Enter address : ");
-        address = sc.next();
-
-        System.out.println("Enter phone number : ");
-        phone = sc.next();
-
-        System.out.println("Enter email : ");
-        email = sc.next();
-
-        System.out.println("Enter password : ");
-        password = sc.next();
-
-        System.out.println("Enter user type (ADMIN / USER) : ");
-        String entered_role = sc.next().toUpperCase();
-        role = UserType.valueOf(entered_role);
-
-        User user = new User(id, name, address, phone, email, password, role);
+        User user = new User(id, name, address, phone, email, password, utype);
         userRepository.create(user);
+        System.out.println("Insertion Successful!!");
     }
 
     public static void findAll() {
-        System.out.println("User List : ");
+        System.out.println("User List ");
         userRepository.findAll().stream()
                 .forEach(x -> System.out.println(x));
     }
@@ -74,46 +115,82 @@ public class UserController {
         Scanner sc = new Scanner(System.in);
         Long id = sc.nextLong();
         User user = userRepository.findById(id);
-        userRepository.delete(user);
+        if (user == null) {
+            System.err.println("User of Id " + id + " not found");
+        } else {
+            userRepository.delete(user);
+            System.out.println("Deletion Successful!!");
+        }
     }
 
     public static void edit() {
-        Long id = null;
         String name = null;
         String address = null;
         String phone = null;
         String email = null;
         String password = null;
-        UserType role = null;
+        UserType utype = null;
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter Id for edit operation : ");
-        id = sc.nextLong();
+        Long id = sc.nextLong();
         User user = userRepository.findById(id);
 
         if (user == null) {
             System.out.println("User of id " + id + "not found");
         } else {
+            while (name == null || name.isEmpty()) {
+                System.out.println("Enter name : ");
+                name = sc.next();
+                if (!isValidString(name)) {
+                    System.err.println("Invalid name!!!");
+                    name = null;
+                }
+            }
+            while (address == null || address.isEmpty()) {
+                System.out.println("Enter address : ");
+                address = sc.next();
+                if (!isValidString(address)) {
+                    System.err.println("Invalid Address!!!");
+                    address = null;
+                }
+            }
+            while (phone == null || phone.isEmpty()) {
+                System.out.println("Enter phone number : ");
+                phone = sc.next();
+                if (!isValidPhoneNumber(phone)) {
+                    System.err.println("Invalid phone!!!");
+                    phone = null;
+                }
+            }
+            while (email == null || email.isEmpty()) {
+                System.out.println("Enter email : ");
+                email = sc.next();
+                if (!isValidEmail(email)) {
+                    System.err.println("Invalid Email!!!");
+                    email = null;
+                }
+            }
 
-            System.out.println("Enter name : ");
-            name = sc.next();
-
-            System.out.println("Enter address : ");
-            address = sc.next();
-
-            System.out.println("Enter phone number : ");
-            phone = sc.next();
-
-            System.out.println("Enter email : ");
-            email = sc.next();
-
-            System.out.println("Enter password : ");
-            password = sc.next();
-
-            System.out.println("Enter user type (ADMIN / USER) : ");
-            String entered_role = sc.next().toUpperCase();
-            role = UserType.valueOf(entered_role);
+            while (password == null || password.isEmpty()) {
+                System.out.println("Enter password : ");
+                password = sc.next();
+                if (!isValidPassword(password)) {
+                    System.err.println("Invalid Password!!!");
+                    password = null;
+                }
+            }
+            while (utype == null) {
+                System.out.println("Enter user type (ADMIN / USER) : ");
+                String entered_role = sc.next().toUpperCase();
+                utype = UserType.valueOf(entered_role);
+                if (!isValidString(entered_role)) {
+                    System.err.println("Invalid Role!!!");
+                    utype = null;
+                }
+            }
+            user = new User(id, name, address, phone, email, password, utype);
+            userRepository.edit(user);
+            System.out.println("Edition Successfull !!");
         }
-        user = new User(id, name, address, phone, email, password, role);
-        userRepository.edit(user);
     }
 }
