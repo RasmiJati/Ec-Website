@@ -17,20 +17,22 @@ public class User {
     private Long id;
     private String name;
     private String address;
+    private String phone;
     private String email;
     private String password;
-    private UserRole role;
+    private UserType utype;
 
     public User() {
     }
 
-    public User(Long id, String name, String address, String email, String password, UserRole role) {
+    public User(Long id, String name, String address, String phone, String email, String password, UserType utype) {
         this.id = id;
         this.name = name;
         this.address = address;
+        this.phone = phone;
         this.email = email;
         this.password = password;
-        this.role = role;
+        this.utype = utype;
     }
 
     public Long getId() {
@@ -57,6 +59,14 @@ public class User {
         this.address = address;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -73,24 +83,25 @@ public class User {
         this.password = password;
     }
 
-    public UserRole getRole() {
-        return role;
+    public UserType getUtype() {
+        return utype;
     }
 
-    public void setRole(UserRole role) {
-        this.role = role;
+    public void setUtype(UserType utype) {
+        this.utype = utype;
     }
 
 //    generate unique integer value for an object
     @Override
     public final int hashCode() {
         int hash = 7;
-        hash = 71 * hash + Objects.hashCode(this.id);
-        hash = 71 * hash + Objects.hashCode(this.name);
-        hash = 71 * hash + Objects.hashCode(this.address);
-        hash = 71 * hash + Objects.hashCode(this.email);
-        hash = 71 * hash + Objects.hashCode(this.password);
-        hash = 71 * hash + Objects.hashCode(this.role);
+        hash = 97 * hash + Objects.hashCode(this.id);
+        hash = 97 * hash + Objects.hashCode(this.name);
+        hash = 97 * hash + Objects.hashCode(this.address);
+        hash = 97 * hash + Objects.hashCode(this.email);
+        hash = 97 * hash + Objects.hashCode(this.password);
+        hash = 97 * hash + Objects.hashCode(this.utype);
+        hash = 97 * hash + Objects.hashCode(this.phone);
         return hash;
     }
 
@@ -116,10 +127,13 @@ public class User {
         if (!Objects.equals(this.password, other.password)) {
             return false;
         }
+        if (!Objects.equals(this.phone, other.phone)) {
+            return false;
+        }
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        if (this.role != other.role) {
+        if (this.utype != other.utype) {
             return false;
         }
         return true;
@@ -127,7 +141,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "id=" + id + ", name=" + name + ", address=" + address + ", email=" + email + ", password=" + password + ", role=" + role;
+        return "id=" + id + ", name=" + name + ", address=" + address + ", phone=" + phone + ", email=" + email + ", password=" + password + ", user type=" + utype;
     }
 
 }

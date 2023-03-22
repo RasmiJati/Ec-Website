@@ -6,7 +6,7 @@
 package com.rasmijati.controller;
 
 import com.rasmijati.model.User;
-import com.rasmijati.model.UserRole;
+import com.rasmijati.model.UserType;
 import com.rasmijati.repository.UserRepository;
 import java.util.Scanner;
 
@@ -21,19 +21,20 @@ public class UserController {
     public static void main(String[] args) {
         userRepository = new UserRepository();
         create();
+        findAll();
     }
 
 //static is used as only static variable and method can be used in other static method i.e main method    
     public static void create() {
-        User user = new User();
-        Scanner sc = new Scanner(System.in);
         Long id = null;
         String name = null;
         String address = null;
+        String phone = null;
         String email = null;
         String password = null;
-        UserRole role = null;
-
+        UserType role = null;
+        
+        Scanner sc = new Scanner(System.in);
         System.out.println("Enter id : ");
         id = sc.nextLong();
 
@@ -42,6 +43,9 @@ public class UserController {
 
         System.out.println("Enter address : ");
         address = sc.next();
+        
+        System.out.println("Enter phone number : ");
+        phone = sc.next();
 
         System.out.println("Enter email : ");
         email = sc.next();
@@ -51,10 +55,16 @@ public class UserController {
 
         System.out.println("Enter user type (ADMIN / USER) : ");
         String entered_role = sc.next().toUpperCase();
-        role = UserRole.valueOf(entered_role);
+        role = UserType.valueOf(entered_role);
 
-        user = new User(id, name, address, email, password, role);
+        User user = new User(id, name, address, phone, email, password, role);
         userRepository.create(user);
-        userRepository.findAll().stream().forEach(x -> System.out.println("Users : " + x));
+    }
+
+    public static void findAll() {
+        System.out.println("User List : ");
+        userRepository.findAll()
+                .stream()
+                .forEach(x -> System.out.println(x));
     }
 }

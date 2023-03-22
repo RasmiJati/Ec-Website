@@ -51,7 +51,7 @@ public class UserRepository {
                     ulist.setAddress(u.getAddress());
                     ulist.setEmail(u.getEmail());
                     ulist.setPassword(u.getPassword());
-                    ulist.setRole(u.getRole());
+                    ulist.setUtype(u.getUtype());
                 });
     }
 }

@@ -9,6 +9,6 @@ package com.rasmijati.model;
  *
  * @author admin
  */
-public enum UserRole {
+public enum UserType {
     ADMIN , USER
 }
