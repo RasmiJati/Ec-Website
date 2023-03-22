@@ -24,13 +24,44 @@ public class UserController {
 
     public static void main(String[] args) {
         userRepository = new UserRepository();
-        create();
-        findAll();
-        edit();
-        findAll();
-        delete();
-        findAll();
+        crudOption();
+    }
 
+    public static void crudOption() {
+        String choice;
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Crud operation for user");
+        do {
+            System.out.println();
+            System.out.println("Enter 1 to create : ");
+            System.out.println("Enter 2 to list : ");
+            System.out.println("Enter 3 to edit : ");
+            System.out.println("Enter 4 to delete : ");
+            System.out.println("Enter 5 to exit : ");
+
+            choice = sc.next();
+
+            switch (choice) {
+                case "1":
+                    create();
+                    break;
+                case "2":
+                    findAll();
+                    break;
+                case "3":
+                    edit();
+                    break;
+                case "4":
+                    delete();
+                    break;
+                case "5":
+                    return;
+                default:
+                    System.out.println("Invalid Option");
+
+                    System.out.println("");
+            }
+        } while (!choice.equals("0"));
     }
 
 //static is used as only static variable and method can be used in other static method i.e main method    
@@ -184,7 +215,7 @@ public class UserController {
                 String entered_role = sc.next().toUpperCase();
                 utype = UserType.valueOf(entered_role);
                 if (!isValidString(entered_role)) {
-                    System.err.println("Invalid Role!!!");
+                    System.err.println("Invalid User Type!!!");
                     utype = null;
                 }
             }
