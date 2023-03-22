@@ -22,12 +22,9 @@ public class UserController {
 
     private static UserRepository userRepository;
 
-    public static void main(String[] args) {
-        userRepository = new UserRepository();
-        crudOption();
-    }
-
-    public static void crudOption() {
+//    static is removed in this method as it won't be accessible by other class
+    public void crudOption(UserRepository userRepository) {
+        this.userRepository = userRepository;
         String choice;
         Scanner sc = new Scanner(System.in);
         System.out.println("Crud operation for user");
@@ -38,6 +35,7 @@ public class UserController {
             System.out.println("Enter 3 to edit : ");
             System.out.println("Enter 4 to delete : ");
             System.out.println("Enter 5 to exit : ");
+            System.out.println();
 
             choice = sc.next();
 
@@ -58,8 +56,6 @@ public class UserController {
                     return;
                 default:
                     System.out.println("Invalid Option");
-
-                    System.out.println("");
             }
         } while (!choice.equals("0"));
     }
