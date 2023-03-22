@@ -125,4 +125,9 @@ public class User {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return "id=" + id + ", name=" + name + ", address=" + address + ", email=" + email + ", password=" + password + ", role=" + role;
+    }
+
 }
